@@ -1,0 +1,67 @@
+1. from newapp.models import *
+2. user1 = User.objects.create_user(username='Julia') ---------> создание пользователя Julia
+3. user2 = User.objects.create_user(username='Anton') ---------> создание пользователя Anton
+4. Author.objects.create(autorUser=user1) ---------> делаем пользователя user1 автором
+5. Author.objects.create(autorUser=user2) ---------> делаем пользователя user2 автором
+
+***Если много категорий, то можно циклом***
+6. Category.objects.create(name='IT') ---------> создание категории новостей "IT"
+7. Category.objects.create(name='SPORT') ---------> создание категории новостей "SPORT"
+8. Category.objects.create(name='Business') ---------> создание категории новостей "Business"
+9. Category.objects.create(name='Fashion') ---------> создание категории новостей "Fashion"
+
+10. author1 = Author.objects.get(id=1) ---------> присваиваем автора с id=1 указанной переменной
+11. author2 = Author.objects.get(id=2) ---------> присваиваем автора с id=2 указанной переменной
+12. Post.objects.create(author=author1, categoryType='AR', title='Article1', text='Big interesting text for article 1') ---------> создание статьи 1
+13. Post.objects.create(author=author2, categoryType='AR', title='Article2', text='Big interesting text for article 2') ---------> создание статьи 2
+14. Post.objects.create(author=author2, categoryType='NW', title='News1', text='Big text for fun news 1') ---------> создание новоси 1
+
+15. Post.objects.get(id=1).postCategory.add(Category.objects.get(id=1)) ---------> присваиваем статье с id=1 категорию с id=1
+16. Post.objects.get(id=1).postCategory.add(Category.objects.get(id=3)) ---------> присваиваем статье с id=1 категорию с id=3
+
+17. Post.objects.get(id=2).postCategory.add(Category.objects.get(id=2)) ---------> присваиваем статье с id=2 категорию с id=2
+18. Post.objects.get(id=2).postCategory.add(Category.objects.get(id=3)) ---------> присваиваем статье с id=2 категорию с id=3
+
+19. Post.objects.get(id=3).postCategory.add(Category.objects.get(id=4)) ---------> присваиваем новости с id=3 категорию с id=4
+20. Post.objects.get(id=3).postCategory.add(Category.objects.get(id=3)) ---------> присваиваем новости с id=3 категорию с id=3
+
+21. Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=2).autorUser, text='Nice article, Julia') ---------> комментарий к посту с id=1 от пользователя с id=2
+22. Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=1).autorUser, text='Thank you! I like it myself:)') ---------> комментарий к посту с id=1 от пользователя с id=1
+
+23. Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=Author.objects.get(id=1).autorUser, text='Nice article, Anton') ---------> комментарий к посту с id=2 от пользователя с id=1
+
+24. Comment.objects.create(commentPost=Post.objects.get(id=3), commentUser=Author.objects.get(id=1).autorUser, text='What an exciting news!') ---------> комментарий к посту с id=3 от пользователя с id=1
+
+25. Post.objects.get(id=1).like() ---------> лайк посту с id=1
+26. Post.objects.get(id=2).dislike() ---------> дизлайк посту с id=2
+27. Post.objects.get(id=3).like() ---------> лайк посту с id=3
+
+28. Comment.objects.get(id=1).like() ---------> лайк комментарию с id=1
+29. Comment.objects.get(id=2).like() ---------> лайк комментарию с id=2
+30. Comment.objects.get(id=3).dislike() ---------> дизлайк комментарию с id=3
+31. Comment.objects.get(id=4).dislike() ---------> дизлайк комментарию с id=4
+
+32. author1.update_rating() ---------> обновить рейтинг автора, находящеося в соответствующей переменной
+33. author2.update_rating() ---------> обновить рейтинг автора, находящеося в соответствующей переменной
+
+34. a = Author.objects.order_by('-ratingAuthor') ---------> присваиваем переменной всех авторов, отсортированных по рейтингу, начиная с самого высокого
+35. a[0].autorUser ---------> выводим имя автора с индексом 0 из списка
+36. a[0].ratingAuthor ---------> выводим рейтинг автора с индексом 0 из списка
+
+37. post = Post.objects.order_by('-rating') ---------> присваиваем переменной все посты, отсортированных по рейтингу, начиная с самого высокого
+38. post[0].dateCreation ---------> выводим дату поста с индексом 0 из списка
+39. post[0].author.autorUser ---------> выводим имя автора поста с индексом 0 из списка
+40. post[0].rating ---------> выводим рейтинг поста с индексом 0 из списка
+41. post[0].title ---------> выводим заголовок поста с индексом 0 из списка
+42. post[0].preview() ---------> выводим превью поста с индексом 0 из списка
+
+43. c = Comment.objects.all()  ---------> присваиваем переменной все комментарии
+
+44.
+for i in c:  ---------> перебираем циклом все комментарии и выводим нужные поля у комментария, где поле пост равно нужному значению.
+	if i.commentPost == post[0]:
+		i.dateCreation
+		i.commentUser
+		i.rating
+		i.text
+
